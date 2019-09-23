@@ -1,4 +1,4 @@
 # neuma-script
 
-Welcome to NeuMa
+Welcome to NeuMa\n
 Pool Project

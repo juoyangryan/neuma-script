@@ -2,10 +2,36 @@ import java.util.concurrent.TimeUnit;
 import java.io.File; 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import java.util.Random;
+
 
 public class Runs{
 
+	//0 - normal; 1 - Kinesthetic; 2 - Visual
+	private int[] trialTypeArray = new int[24];
+	private static final Random RAND = new Random();
+
 	static File beep = new File("Censored_Beep.WAV");
+
+	public void setTrials() {
+		int kineSet = 0;
+		int visualSet = 0;
+		while (kineSet < 4) {
+			int index = RAND.nextInt(24);
+			if (trialTypeArray[index] == 0) {
+				trialTypeArray[index] = 1;
+				kineSet++;
+			}
+		}
+
+		while (visualSet < 4) {
+			int index = RAND.nextInt(24);
+			if (trialTypeArray[index] == 0) {
+				trialTypeArray[index] = 2;
+				kineSet++;
+			}
+		}
+	}
 
 	public void normalTrial() throws InterruptedException {
 

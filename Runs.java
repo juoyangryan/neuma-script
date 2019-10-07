@@ -5,7 +5,7 @@ import javax.sound.sampled.Clip;
 import java.util.Random;
 
 
-public class Runs{
+public class Runs extends initUI {
 
 	//0 - normal; 1 - Kinesthetic; 2 - Visual
 	private int[] trialTypeArray = new int[24];
@@ -13,6 +13,11 @@ public class Runs{
 
 	static File beep = new File("Censored_Beep.WAV");
 
+	public Runs() {
+		super();
+	}
+
+	//implements randomized kinesthetic and visual trials (4 of each)
 	public void setTrials() {
 		int kineSet = 0;
 		int visualSet = 0;
@@ -28,7 +33,20 @@ public class Runs{
 			int index = RAND.nextInt(24);
 			if (trialTypeArray[index] == 0) {
 				trialTypeArray[index] = 2;
-				kineSet++;
+				visualSet++;
+			}
+		}
+	}
+
+	public void runTrials(Runs run) throws InterruptedException {
+
+		for (int i = 0; i < 25; i++) {
+			if (trialTypeArray[i] == 0) {
+				run.normalTrial();
+			} else if (trialTypeArray[i] == 1) {
+				run.kineTrial();
+			} else {
+				run.visualTrial();
 			}
 		}
 	}
@@ -145,5 +163,10 @@ public class Runs{
         }
     }
 
+    public static void main(String[] args) throws InterruptedException {
+    	Runs run1 = new Runs();
+    	run1.setTrials();
+    	run1.runTrials(run1);
+    }
 	
 }

@@ -1,24 +1,26 @@
 import java.util.Scanner;
 
 public class initUI {
-    public static void main(String[] args) {
+    protected int idNum;
+    protected String initial, date, skillLevel;
+    
+    public initUI() {
         Scanner input = new Scanner(System.in);
 
         //id
         System.out.print("ID: ");
-        int idNum = input.nextInt();
+        idNum = input.nextInt();
 
-        //
+        //initial
         System.out.print("Initial: ");
-        String initial = input.next();
+        initial = input.next();
 
         //date
         System.out.print("Date (MM/DD/YYYY): ");
-        String date = input.next();
+        date = input.next();
 
         //Skill level
         System.out.print("Skill level: ");
-        String skillLevel = input.next();
-
+        skillLevel = input.next();
     }
 }

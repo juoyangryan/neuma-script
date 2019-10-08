@@ -3,10 +3,13 @@ import java.io.File;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.util.Random;
+import java.util.Scanner;
 
 
-public class Runs extends initUI {
+public class Runs {
 
+	private int idNum;
+    private String initial, date, skillLevel;
 	//0 - normal; 1 - Kinesthetic; 2 - Visual
 	private int[] trialTypeArray = new int[24];
 	private static final Random RAND = new Random();
@@ -14,14 +17,28 @@ public class Runs extends initUI {
 	static File beep = new File("Censored_Beep.WAV");
 
 	public Runs() {
-		super();
-	}
+		Scanner input = new Scanner(System.in);
 
-	//implements randomized kinesthetic and visual trials (4 of each)
-	public void setTrials() {
-		int kineSet = 0;
+        //id
+        System.out.print("ID: ");
+        idNum = input.nextInt();
+
+        //initial
+        System.out.print("Initial: ");
+        initial = input.next();
+
+        //date
+        System.out.print("Date (MM/DD/YYYY): ");
+        date = input.next();
+
+        //Skill level
+        System.out.print("Skill level: ");
+        skillLevel = input.next();
+
+        //implements randomized kinesthetic and visual trials (4 of each)
+        int kineSet = 0;
 		int visualSet = 0;
-		while (kineSet < 4) {
+		while (kineSet < 6) {
 			int index = RAND.nextInt(24);
 			if (trialTypeArray[index] == 0) {
 				trialTypeArray[index] = 1;
@@ -29,7 +46,7 @@ public class Runs extends initUI {
 			}
 		}
 
-		while (visualSet < 4) {
+		while (visualSet < 6) {
 			int index = RAND.nextInt(24);
 			if (trialTypeArray[index] == 0) {
 				trialTypeArray[index] = 2;
@@ -96,6 +113,8 @@ public class Runs extends initUI {
 
 		//vibration immediately after beep for 1s
 		TimeUnit.SECONDS.sleep(1);
+
+
 
 		//wait for 2nd beep and hit ball
 		TimeUnit.SECONDS.sleep(1);
@@ -165,7 +184,6 @@ public class Runs extends initUI {
 
     public static void main(String[] args) throws InterruptedException {
     	Runs run1 = new Runs();
-    	run1.setTrials();
     	run1.runTrials(run1);
     }
 	

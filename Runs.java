@@ -25,7 +25,6 @@ public class Runs {
 	public Runs() {
 		Scanner input = new Scanner(System.in);
 
-
         //id
         System.out.print("ID: ");
         idNum = input.nextInt();
@@ -35,7 +34,6 @@ public class Runs {
         System.out.print("Initial: ");
         initial = input.next();
         initialList.add(initial);
-
 
         //date
         System.out.print("Date (MM/DD/YYYY): ");
@@ -97,6 +95,7 @@ public class Runs {
 	//ArrayList<long> timeList = new ArrayList<long>();
 
 	public void normalTrial() throws InterruptedException {
+
         //first beep sound indicating onset of the trial
         playSound(beep);
         long startTime = System.nanoTime();
@@ -125,9 +124,7 @@ public class Runs {
 
         //press key to next trial
 
-
         long endTime = System.nanoTime();
-
         long timeElapsed = endTime - startTime;
 
         System.out.println("The total time for trial in nanoseconds: " + timeElapsed);
@@ -138,7 +135,6 @@ public class Runs {
 
 
 	public void kineTrial() throws InterruptedException {
-
 		//first beep sound indicating onset of the trial
 		playSound(beep);
 		long startTime = System.nanoTime();
@@ -153,15 +149,16 @@ public class Runs {
 		playSound(beep);
         long beepTime = System.nanoTime();
         timeList.add(beepTime - startTime);
+        runMotor();
 
 		//vibration immediately after beep for 1s
 		TimeUnit.SECONDS.sleep(1);
+		turnOff();
         long restTime1 = System.nanoTime();
         timeList.add(restTime1 - startTime);
 
 
-
-		//wait for 2nd beep and hit ball
+		//wait for vibration and hit ball
 		TimeUnit.SECONDS.sleep(1);
         long hitTime1 = System.nanoTime();
         timeList.add(hitTime1 - startTime);
@@ -177,11 +174,8 @@ public class Runs {
         long restTime2 = System.nanoTime();
         timeList.add(restTime2 - startTime);
 
-
 		long endTime = System.nanoTime();
-
 		long timeElapsed = endTime - startTime;
-
 		System.out.println("The total time for trial in nanoseconds: " + timeElapsed);
         System.out.println("The total time for trial in milliseconds: " + timeElapsed / 1000000);
 
@@ -203,9 +197,11 @@ public class Runs {
 		playSound(beep);
         long beepTime = System.nanoTime();
         timeList.add(beepTime - startTime);
-
-		//vibration immediately after beep for 1s
+        runLight();
+		//light immediately after beep for 1s
 		TimeUnit.SECONDS.sleep(1);
+		turnOff();
+
         long restTime1 = System.nanoTime();
         timeList.add(restTime1 - startTime);
 
@@ -248,6 +244,29 @@ public class Runs {
 
         }
     }
+
+    public void runMotor() {
+    	try {
+		new HC05().go(2);
+		} catch (Exception ex) {
+		Logger.getLogger(HC05.class.getName()).log(Level.SEVERE, null, ex);
+		}
+    }
+    public void runLight() {
+    	try {
+		new HC05().go(1);
+		} catch (Exception ex) {
+		Logger.getLogger(HC05.class.getName()).log(Level.SEVERE, null, ex);
+		}
+    }
+    public void turnOff() {
+    	try {
+		new HC05().go(0);
+		} catch (Exception ex) {
+		Logger.getLogger(HC05.class.getName()).log(Level.SEVERE, null, ex);
+		}
+    }    
+
 
 
     public static void main(String[] args) throws InterruptedException {

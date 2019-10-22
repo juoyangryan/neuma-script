@@ -5,6 +5,8 @@ import javax.sound.sampled.Clip;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Runs {
 

@@ -249,21 +249,21 @@ public class Runs {
 
     public void runMotor() {
     	try {
-		new HC05().go(2);
+			HC05.go(2);
 		} catch (Exception ex) {
-		Logger.getLogger(HC05.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(HC05.class.getName()).log(Level.SEVERE, null, ex);
 		}
     }
     public void runLight() {
     	try {
-		new HC05().go(1);
+			HC05.go(1);
 		} catch (Exception ex) {
 		Logger.getLogger(HC05.class.getName()).log(Level.SEVERE, null, ex);
 		}
     }
     public void turnOff() {
     	try {
-		new HC05().go(0);
+			HC05.go(0);
 		} catch (Exception ex) {
 		Logger.getLogger(HC05.class.getName()).log(Level.SEVERE, null, ex);
 		}

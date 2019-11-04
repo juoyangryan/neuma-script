@@ -1,4 +1,4 @@
-//compile with javac HC05.java -classpath ./bluecove-2.1.0.jar
+//compile with javac HC05.java -classpath ./bluecove-2.1.1.jar
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,13 +16,13 @@ import javax.microedition.io.Connector;
 import javax.microedition.io.StreamConnection;
 
 public class HC05 {
-	boolean scanFinished = false;
-	String hc05Url = "btspp://201610094738:1;authenticate=false;encrypt=false;master=false"; //Replace this with your bluetooth URL
+	static boolean scanFinished = false;
+	static String hc05Url = "btspp://98d3b1fd3ac2:1;authenticate=false;encrypt=false;master=false"; //Replace this with your bluetooth URL
 
 
 
 
-	public void go(int i) throws Exception {
+	public static void go(int i) throws Exception {
 		StreamConnection streamConnection = (StreamConnection) Connector.open(hc05Url);
 		OutputStream os = streamConnection.openOutputStream();
 		//InputStream is = streamConnection.openInputStream();

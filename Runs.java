@@ -1,5 +1,7 @@
 import java.util.concurrent.TimeUnit;
 import java.io.File; 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.util.Random;
@@ -7,6 +9,11 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays; 
 
 public class Runs {
 
@@ -106,23 +113,23 @@ public class Runs {
 		//position for 2 seconds
         TimeUnit.SECONDS.sleep(2);
 		long posTime = System.nanoTime();
-		timeList.add(posTime - startTime);
+		timeList.add(posTime - startTime); //1
 
         //second beep sound ~0.5s
         playSound(beep);
         long beepTime = System.nanoTime();
-        timeList.add(beepTime - startTime);
+        timeList.add(beepTime - startTime); //2
 
         //hit 1s
         TimeUnit.SECONDS.sleep(1);
         long hitTime = System.nanoTime();
-        timeList.add(hitTime - startTime);
+        timeList.add(hitTime - startTime); //3
 
 
         //resting 1s
         TimeUnit.SECONDS.sleep(1);
         long restTime = System.nanoTime();
-        timeList.add(restTime - startTime);
+        timeList.add(restTime - startTime); //4
 
         //press key to next trial
 
@@ -130,6 +137,7 @@ public class Runs {
         long timeElapsed = endTime - startTime;
 
         System.out.println("The total time for trial in nanoseconds: " + timeElapsed);
+        timeList.add(timeElapsed); //5
         System.out.println("The total time for trial in milliseconds: " + timeElapsed / 1000000);
 
         System.out.println("End of Normal Experiment");
@@ -144,41 +152,42 @@ public class Runs {
 		//position for 2 seconds
 		TimeUnit.SECONDS.sleep(2);
 		long posTime = System.nanoTime();
-		timeList.add(posTime - startTime);
+		timeList.add(posTime - startTime); //1
 
 
 		//second beep sound ~0.5s
 		playSound(beep);
         long beepTime = System.nanoTime();
-        timeList.add(beepTime - startTime);
-        runMotor();
+        timeList.add(beepTime - startTime); //2
+        //runMotor();
 
 		//vibration immediately after beep for 1s
 		TimeUnit.SECONDS.sleep(1);
-		turnOff();
+		//turnOff();
         long restTime1 = System.nanoTime();
-        timeList.add(restTime1 - startTime);
+        timeList.add(restTime1 - startTime); //3
 
 
 		//wait for vibration and hit ball
 		TimeUnit.SECONDS.sleep(1);
         long hitTime1 = System.nanoTime();
-        timeList.add(hitTime1 - startTime);
+        timeList.add(hitTime1 - startTime); //4
 
 
 		System.out.println("Hit the ball after 2nd beep sound.");
 		TimeUnit.SECONDS.sleep(1);
 		long hitTime2 = System.nanoTime();
-        timeList.add(hitTime2 - startTime);
+        timeList.add(hitTime2 - startTime); //5
 
 		//resting 1s
 		TimeUnit.SECONDS.sleep(1);
         long restTime2 = System.nanoTime();
-        timeList.add(restTime2 - startTime);
+        timeList.add(restTime2 - startTime); //6
 
 		long endTime = System.nanoTime();
 		long timeElapsed = endTime - startTime;
 		System.out.println("The total time for trial in nanoseconds: " + timeElapsed);
+		timeList.add(timeElapsed); //7
         System.out.println("The total time for trial in milliseconds: " + timeElapsed / 1000000);
 
         System.out.println("End of Kinesthetic Experiment");
@@ -192,44 +201,45 @@ public class Runs {
 		//position for 2 seconds
 		TimeUnit.SECONDS.sleep(2);
 		long posTime = System.nanoTime();
-		timeList.add(posTime - startTime);
+		timeList.add(posTime - startTime); //1
 
 
 		//second beep sound ~0.5s
 		playSound(beep);
         long beepTime = System.nanoTime();
-        timeList.add(beepTime - startTime);
-        runLight();
+        timeList.add(beepTime - startTime); //2
+        //runLight();
 		//light immediately after beep for 1s
 		TimeUnit.SECONDS.sleep(1);
-		turnOff();
+		//turnOff();
 
         long restTime1 = System.nanoTime();
-        timeList.add(restTime1 - startTime);
+        timeList.add(restTime1 - startTime); //3
 
 
 
 		//wait for 2nd beep and hit ball
 		TimeUnit.SECONDS.sleep(1);
         long hitTime1 = System.nanoTime();
-        timeList.add(hitTime1 - startTime);
+        timeList.add(hitTime1 - startTime); //4
 
 
 		System.out.println("Hit the ball after 2nd beep sound.");
 		TimeUnit.SECONDS.sleep(1);
 		long hitTime2 = System.nanoTime();
-        timeList.add(hitTime2 - startTime);
+        timeList.add(hitTime2 - startTime); //5
 
 		//resting 1s
 		TimeUnit.SECONDS.sleep(1);
         long restTime2 = System.nanoTime();
-        timeList.add(restTime2 - startTime);
+        timeList.add(restTime2 - startTime); //6
 
 		long endTime = System.nanoTime();
 
 		long timeElapsed = endTime - startTime;
 
 		System.out.println("The total time for trial in nanoseconds: " + timeElapsed);
+		timeList.add(timeElapsed); //7
         System.out.println("The total time for trial in milliseconds: " + timeElapsed / 1000000);
 
         System.out.println("End of Visual Experiment");
@@ -247,33 +257,28 @@ public class Runs {
         }
     }
 
-    public void runMotor() {
-    	try {
-		new HC05().go(2);
-		} catch (Exception ex) {
-		Logger.getLogger(HC05.class.getName()).log(Level.SEVERE, null, ex);
-		}
-    }
-    public void runLight() {
-    	try {
-		new HC05().go(1);
-		} catch (Exception ex) {
-		Logger.getLogger(HC05.class.getName()).log(Level.SEVERE, null, ex);
-		}
-    }
-    public void turnOff() {
-    	try {
-		new HC05().go(0);
-		} catch (Exception ex) {
-		Logger.getLogger(HC05.class.getName()).log(Level.SEVERE, null, ex);
-		}
-    }    
+  //   public void runMotor() {
+  //   	try {
+		// new HC05().go(2);
+		// } catch (Exception ex) {
+		// Logger.getLogger(HC05.class.getName()).log(Level.SEVERE, null, ex);
+		// }
+  //   }
+  //   public void runLight() {
+  //   	try {
+		// new HC05().go(1);
+		// } catch (Exception ex) {
+		// Logger.getLogger(HC05.class.getName()).log(Level.SEVERE, null, ex);
+		// }
+  //   }
+  //   public void turnOff() {
+  //   	try {
+		// new HC05().go(0);
+		// } catch (Exception ex) {
+		// Logger.getLogger(HC05.class.getName()).log(Level.SEVERE, null, ex);
+		// }
+  //   }    
 
 
 
-    public static void main(String[] args) throws InterruptedException {
-    	Runs run1 = new Runs();
-    	run1.runTrials(run1);
-    }
-	
 }

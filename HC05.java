@@ -1,4 +1,5 @@
 //compile with javac HC05.java -classpath ./bluecove-2.1.1.jar
+//run with java -cp .\bluecove-2.1.0.jar;. HC05
 
 import java.io.IOException;
 import java.io.InputStream;
